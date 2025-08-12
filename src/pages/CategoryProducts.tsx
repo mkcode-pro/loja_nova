@@ -85,7 +85,7 @@ const CategoryProducts = () => {
           </Button>
         </div>
 
-        <Accordion type="multiple" className="w-full space-y-2" defaultValue={["Produtos Injetáveis", "Produtos Orais"]}>
+        <Accordion type="multiple" className="w-full space-y-2">
           {categoryData.subcategories.map((subcategory, index) => (
             <AccordionItem key={subcategory.name} value={subcategory.name} id={`category-accordion-${index}`} className="bg-white border-none rounded-lg shadow-sm overflow-hidden">
               <AccordionTrigger onClick={() => handleAccordionClick(`category-accordion-${index}`)} className="bg-blue-800 text-white hover:no-underline px-4 py-3 rounded-t-lg">
