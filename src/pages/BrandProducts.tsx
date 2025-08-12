@@ -11,8 +11,8 @@ import { cn } from "@/lib/utils";
 
 // Dados de exemplo atualizados para incluir subcategorias e mais detalhes
 const productsByBrand: { [key: string]: { logo: string; subcategories: { name: string; products: any[] }[] } } = {
-  "R-x Pharmaceuticals": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos Injetáveis", products: [{ name: "Produto Rx 1", description: "desc", price: "R$ 199,90", image: "/placeholder.svg" }] }, { name: "Produtos Orais", products: [] }] },
-  "King Pharma": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos Injetáveis", products: [] }, { name: "Produtos Orais", products: [{ name: "Produto King 1", description: "desc", price: "R$ 189,90", image: "/placeholder.svg" }] }] },
+  "R-x Pharmaceuticals": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos Injetáveis", products: [{ name: "Produto Rx 1", description: "desc", price: "R$ 199,90", image: "/placeholder.svg" }, { name: "Produto Rx 2", description: "desc", price: "R$ 210,00", image: "/placeholder.svg" }] }, { name: "Produtos Orais", products: [{ name: "Produto Rx Oral", description: "desc", price: "R$ 150,00", image: "/placeholder.svg" }] }] },
+  "King Pharma": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos Injetáveis", products: [{ name: "King Inject", description: "desc", price: "R$ 250,00", image: "/placeholder.svg" }] }, { name: "Produtos Orais", products: [{ name: "Produto King 1", description: "desc", price: "R$ 189,90", image: "/placeholder.svg" }, { name: "Produto King 2", description: "desc", price: "R$ 199,90", image: "/placeholder.svg" }] }] },
   "Landerlan": {
     logo: "/placeholder.svg",
     subcategories: [
@@ -23,9 +23,16 @@ const productsByBrand: { [key: string]: { logo: string; subcategories: { name: s
           { name: "Duraland 1ml", description: "1ml - 250mg/ml", price: "R$ 22,50", image: "/placeholder.svg", discount: "10%" },
           { name: "GH LANDERTROPIN", description: "10UI - 4mg/1.5ml", price: "R$ 2.199,00", image: "/placeholder.svg" },
           { name: "Primobolan Inject.", description: "10ml - 100mg/ml", price: "R$ 369,90", image: "/placeholder.svg", discount: "5%" },
+          { name: "Testoland Depot", description: "10ml - 200mg/ml", price: "R$ 150,00", image: "/placeholder.svg" },
         ]
       },
-      { name: "Produtos Orais", products: [] }
+      { 
+        name: "Produtos Orais", 
+        products: [
+          { name: "Oxandroland", description: "100 comp - 10mg", price: "R$ 180,00", image: "/placeholder.svg" },
+          { name: "Stanozoland", description: "100 comp - 10mg", price: "R$ 95,00", image: "/placeholder.svg" },
+        ] 
+      }
     ]
   },
   "Gold Premium Series": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos Injetáveis", products: [] }, { name: "Produtos Orais", products: [{ name: "Produto Gold 1", description: "desc", price: "R$ 299,90", image: "/placeholder.svg" }] }] },
