@@ -11,8 +11,8 @@ import { cn } from "@/lib/utils";
 
 // Dados de exemplo atualizados para incluir subcategorias e mais detalhes
 const productsByBrand: { [key: string]: { logo: string; subcategories: { name: string; products: any[] }[] } } = {
-  "R-x Pharmaceuticals": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos", products: [{ name: "Produto Rx 1", description: "desc", price: "R$ 199,90", image: "/placeholder.svg" }] }] },
-  "King Pharma": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos", products: [{ name: "Produto King 1", description: "desc", price: "R$ 189,90", image: "/placeholder.svg" }] }] },
+  "R-x Pharmaceuticals": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos Injetáveis", products: [{ name: "Produto Rx 1", description: "desc", price: "R$ 199,90", image: "/placeholder.svg" }] }, { name: "Produtos Orais", products: [] }] },
+  "King Pharma": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos Injetáveis", products: [] }, { name: "Produtos Orais", products: [{ name: "Produto King 1", description: "desc", price: "R$ 189,90", image: "/placeholder.svg" }] }] },
   "Landerlan": {
     logo: "/placeholder.svg",
     subcategories: [
@@ -28,16 +28,16 @@ const productsByBrand: { [key: string]: { logo: string; subcategories: { name: s
       { name: "Produtos Orais", products: [] }
     ]
   },
-  "Gold Premium Series": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos", products: [{ name: "Produto Gold 1", description: "desc", price: "R$ 299,90", image: "/placeholder.svg" }] }] },
-  "Muscle": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos", products: [{ name: "Produto Muscle 1", description: "desc", price: "R$ 159,90", image: "/placeholder.svg" }] }] },
-  "Alpha-Pharma": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos", products: [{ name: "Produto Alpha 1", description: "desc", price: "R$ 399,90", image: "/placeholder.svg" }] }] },
-  "Canada Labs": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos", products: [{ name: "Produto Canada 1", description: "desc", price: "R$ 349,90", image: "/placeholder.svg" }] }] },
-  "Cooper Pharma": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos", products: [{ name: "Produto Cooper 1", description: "desc", price: "R$ 319,90", image: "/placeholder.svg" }] }] },
-  "Eminence Labs": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos", products: [{ name: "Produto Eminence 1", description: "desc", price: "R$ 359,90", image: "/placeholder.svg" }] }] },
-  "Oxygen KW Pharma": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos", products: [{ name: "Produto Oxygen 1", description: "desc", price: "R$ 329,90", image: "/placeholder.svg" }] }] },
-  "Pharacom Labs": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos", products: [{ name: "Produto Pharacom 1", description: "desc", price: "R$ 379,90", image: "/placeholder.svg" }] }] },
-  "ZPHC": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos", products: [{ name: "Produto ZPHC 1", description: "desc", price: "R$ 419,90", image: "/placeholder.svg" }] }] },
-  "Groth": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos", products: [{ name: "Produto Groth 1", description: "desc", price: "R$ 129,90", image: "/placeholder.svg" }] }] },
+  "Gold Premium Series": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos Injetáveis", products: [] }, { name: "Produtos Orais", products: [{ name: "Produto Gold 1", description: "desc", price: "R$ 299,90", image: "/placeholder.svg" }] }] },
+  "Muscle": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos Injetáveis", products: [] }, { name: "Produtos Orais", products: [{ name: "Produto Muscle 1", description: "desc", price: "R$ 159,90", image: "/placeholder.svg" }] }] },
+  "Alpha-Pharma": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos Injetáveis", products: [] }, { name: "Produtos Orais", products: [{ name: "Produto Alpha 1", description: "desc", price: "R$ 399,90", image: "/placeholder.svg" }] }] },
+  "Canada Labs": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos Injetáveis", products: [] }, { name: "Produtos Orais", products: [{ name: "Produto Canada 1", description: "desc", price: "R$ 349,90", image: "/placeholder.svg" }] }] },
+  "Cooper Pharma": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos Injetáveis", products: [] }, { name: "Produtos Orais", products: [{ name: "Produto Cooper 1", description: "desc", price: "R$ 319,90", image: "/placeholder.svg" }] }] },
+  "Eminence Labs": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos Injetáveis", products: [] }, { name: "Produtos Orais", products: [{ name: "Produto Eminence 1", description: "desc", price: "R$ 359,90", image: "/placeholder.svg" }] }] },
+  "Oxygen KW Pharma": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos Injetáveis", products: [] }, { name: "Produtos Orais", products: [{ name: "Produto Oxygen 1", description: "desc", price: "R$ 329,90", image: "/placeholder.svg" }] }] },
+  "Pharacom Labs": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos Injetáveis", products: [] }, { name: "Produtos Orais", products: [{ name: "Produto Pharacom 1", description: "desc", price: "R$ 379,90", image: "/placeholder.svg" }] }] },
+  "ZPHC": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos Injetáveis", products: [] }, { name: "Produtos Orais", products: [{ name: "Produto ZPHC 1", description: "desc", price: "R$ 419,90", image: "/placeholder.svg" }] }] },
+  "Groth": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos Injetáveis", products: [] }, { name: "Produtos Orais", products: [{ name: "Produto Groth 1", description: "desc", price: "R$ 129,90", image: "/placeholder.svg" }] }] },
 };
 
 const BrandProducts = () => {
@@ -45,6 +45,12 @@ const BrandProducts = () => {
   const decodedBrandName = brandName ? decodeURIComponent(brandName) : "Marca";
   const brandData = productsByBrand[decodedBrandName];
   const [view, setView] = useState<'grid' | 'list'>('grid');
+
+  const handleAccordionClick = (id: string) => {
+    setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 200); // Pequeno atraso para a animação do acordeão começar
+  };
 
   if (!brandData) {
     return (
@@ -103,25 +109,29 @@ const BrandProducts = () => {
           </Button>
         </div>
 
-        <Accordion type="multiple" className="w-full space-y-2">
-          {brandData.subcategories.map((subcategory) => (
-            <AccordionItem key={subcategory.name} value={subcategory.name} className="bg-white border-none rounded-lg shadow-sm overflow-hidden">
-              <AccordionTrigger className="bg-blue-800 text-white hover:no-underline px-4 py-3 rounded-t-lg">
+        <Accordion type="multiple" className="w-full space-y-2" defaultValue={["Produtos Injetáveis", "Produtos Orais"]}>
+          {brandData.subcategories.map((subcategory, index) => (
+            <AccordionItem key={subcategory.name} value={subcategory.name} id={`brand-accordion-${index}`} className="bg-white border-none rounded-lg shadow-sm overflow-hidden">
+              <AccordionTrigger onClick={() => handleAccordionClick(`brand-accordion-${index}`)} className="bg-blue-800 text-white hover:no-underline px-4 py-3 rounded-t-lg">
                 {subcategory.name}
               </AccordionTrigger>
               <AccordionContent className="p-4">
-                <div className={cn(
-                  "gap-4",
-                  view === 'grid' ? "grid grid-cols-2" : "flex flex-col"
-                )}>
-                  {subcategory.products.map((product) => (
-                    <ProductCard
-                      key={product.name}
-                      view={view}
-                      {...product}
-                    />
-                  ))}
-                </div>
+                {subcategory.products.length > 0 ? (
+                  <div className={cn(
+                    "gap-4",
+                    view === 'grid' ? "grid grid-cols-2" : "flex flex-col"
+                  )}>
+                    {subcategory.products.map((product) => (
+                      <ProductCard
+                        key={product.name}
+                        view={view}
+                        {...product}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm text-gray-500 text-center py-4">Nenhum produto nesta categoria.</p>
+                )}
               </AccordionContent>
             </AccordionItem>
           ))}
