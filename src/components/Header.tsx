@@ -12,6 +12,9 @@ export const Header = () => {
       {/* Mobile Header */}
       <div className="md:hidden">
         <div className="flex items-center gap-2 p-2">
+            <Link to="/" className="shrink-0">
+              <img src="/placeholder.svg" alt="Logo" className="h-8 w-auto" />
+            </Link>
             <Input placeholder="Pesquisar..." className="flex-grow" />
             <Button className="bg-blue-700 hover:bg-blue-800 shrink-0">
             <User className="mr-2 h-4 w-4" /> Entrar
