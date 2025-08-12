@@ -11,34 +11,23 @@ import { Input } from "@/components/ui/input";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
 import { useCart, Product, CartItem } from "@/context/CartContext";
-
-const productsByBrand: { [key: string]: { logo: string; subcategories: { name: string; products: Product[] }[] } } = {
-  "R-x Pharmaceuticals": { logo: "/placeholder.svg", subcategories: [{ name: "Produtos Injetáveis", products: [{ id: "rx1", name: "Produto Rx 1", description: "desc", price: 199.90, image: "/placeholder.svg" }] }, { name: "Produtos Orais", products: [] }] },
-  "Landerlan": {
-    logo: "/placeholder.svg",
-    subcategories: [
-      {
-        name: "Produtos Injetáveis",
-        products: [
-          { id: "decaland", name: "Decaland 5ml", description: "5ml - 200mg/ml", price: 84.90, image: "/placeholder.svg", discount: "15%" },
-          { id: "duraland", name: "Duraland 1ml", description: "1ml - 250mg/ml", price: 22.50, image: "/placeholder.svg", discount: "10%" },
-        ]
-      },
-      { 
-        name: "Produtos Orais", 
-        products: [
-          { id: "oxandroland", name: "Oxandroland", description: "100 comp - 10mg", price: 180.00, image: "/placeholder.svg" },
-        ] 
-      }
-    ]
-  },
-  // Outras marcas...
-};
+import { ALL_PRODUCTS } from "@/data/products";
 
 const BrandProducts = () => {
   const { brandName } = useParams<{ brandName: string }>();
   const decodedBrandName = brandName ? decodeURIComponent(brandName) : "Marca";
-  const brandData = productsByBrand[decodedBrandName];
+  
+  const brandProducts = ALL_PRODUCTS.filter(p => p.brand === decodedBrandName);
+  const injectableProducts = brandProducts.filter(p => p.category === 'Injetável');
+  const oralProducts = brandProducts.filter(p => p.category === 'Oral');
+  const brandData = {
+    logo: "/placeholder.svg", // Placeholder, pode ser melhorado depois
+    subcategories: [
+      { name: "Produtos Injetáveis", products: injectableProducts },
+      { name: "Produtos Orais", products: oralProducts }
+    ]
+  };
+
   const [view, setView] = useState<'grid' | 'list'>('grid');
   const { addToCart, getCartTotal } = useCart();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -56,25 +45,32 @@ const BrandProducts = () => {
     }, 200);
   };
 
-  if (!brandData) {
-    // ... (código de marca não encontrada)
-    return <div>Marca não encontrada</div>;
-  }
-
   return (
     <div className="bg-gray-50 min-h-screen flex flex-col">
       <Header />
       <main className="p-4 space-y-4 pb-24 md:pb-6 flex-grow">
-        {/* ... (código do cabeçalho da página) */}
+        <div className="flex items-center mb-4">
+          <Button asChild variant="ghost" size="icon" className="shrink-0 -ml-2">
+            <Link to="/">
+              <ArrowLeft />
+              <span className="sr-only">Voltar</span>
+            </Link>
+          </Button>
+        </div>
+
         <div className="border rounded-lg p-4 flex items-center justify-center h-24 bg-white shadow-sm">
           <img src={brandData.logo} alt={decodedBrandName} className="max-h-full max-w-full object-contain" />
         </div>
+
         <h1 className="text-2xl font-bold text-center">{decodedBrandName}</h1>
+
         <Input placeholder={`Buscar produtos em ${decodedBrandName}...`} />
+
         <div className="flex items-center justify-center bg-gray-200 p-1 rounded-lg">
           <Button onClick={() => setView('grid')} className={cn("w-full", view === 'grid' ? 'bg-white text-blue-700 shadow' : 'bg-transparent text-gray-600 shadow-none')}><LayoutGrid className="mr-2 h-4 w-4" /> Grid</Button>
           <Button onClick={() => setView('list')} className={cn("w-full", view === 'list' ? 'bg-white text-blue-700 shadow' : 'bg-transparent text-gray-600 shadow-none')}><List className="mr-2 h-4 w-4" /> Lista</Button>
         </div>
+
         <Accordion type="multiple" className="w-full space-y-2">
           {brandData.subcategories.map((subcategory, index) => (
             <AccordionItem key={subcategory.name} value={subcategory.name} id={`brand-accordion-${index}`} className="bg-white border-none rounded-lg shadow-sm overflow-hidden">
@@ -83,7 +79,7 @@ const BrandProducts = () => {
                 {subcategory.products.length > 0 ? (
                   <div className={cn("gap-4", view === 'grid' ? "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4" : "flex flex-col")}>
                     {subcategory.products.map((product) => (
-                      <ProductCard key={product.id} product={product} view={view} onAddToCart={handleAddToCart} discount={(product as any).discount} />
+                      <ProductCard key={product.id} product={product} view={view} onAddToCart={handleAddToCart} />
                     ))}
                   </div>
                 ) : (

@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import BrandProducts from "./pages/BrandProducts";
 import CategoryProducts from "./pages/CategoryProducts";
+import ProductDetail from "./pages/ProductDetail";
 import CartPage from "./pages/Cart";
 import ScrollToTop from "./components/ScrollToTop";
 import { CartProvider } from "./context/CartContext";
@@ -25,6 +26,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/marcas/:brandName" element={<BrandProducts />} />
             <Route path="/diversos/:categoryName" element={<CategoryProducts />} />
+            <Route path="/produto/:productId" element={<ProductDetail />} />
             <Route path="/carrinho" element={<CartPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

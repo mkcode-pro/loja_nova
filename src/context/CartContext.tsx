@@ -6,8 +6,15 @@ export interface Product {
   name: string;
   description: string;
   price: number;
+  originalPrice?: number;
   image: string;
   brand?: string;
+  category?: string;
+  tags?: string[];
+  details?: {
+    description: string;
+    specifications: string;
+  };
   discount?: string;
 }
 
