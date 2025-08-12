@@ -2,14 +2,15 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { User, ShoppingCart, Search, Store } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useCart } from "@/context/CartContext";
 
 export const Header = () => {
+  const { getCartItemCount } = useCart();
+  const itemCount = getCartItemCount();
+
   return (
     <header className="bg-white sticky top-0 z-20">
-      {/* Top gradient bar */}
       <div className="h-0.5 bg-gradient-to-r from-red-500 to-blue-600" />
-      
-      {/* Mobile Header */}
       <div className="md:hidden">
         <div className="flex items-center gap-2 p-2">
             <Link to="/" className="shrink-0">
@@ -20,11 +21,8 @@ export const Header = () => {
             <User className="mr-2 h-4 w-4" /> Entrar
             </Button>
         </div>
-        {/* Bottom gradient line for mobile header */}
         <div className="h-0.5 bg-gradient-to-r from-red-500 to-blue-600" />
       </div>
-
-      {/* Desktop Header */}
       <div className="hidden md:block border-b">
         <div className="flex items-center justify-between p-4 max-w-7xl mx-auto">
             <Link to="/" className="text-2xl font-bold text-blue-800">
@@ -40,14 +38,16 @@ export const Header = () => {
             <Button variant="ghost" className="text-gray-600">
                 <Store className="mr-2 h-5 w-5" /> Marcas
             </Button>
-            <div className="relative">
+            <Link to="/carrinho" className="relative">
                 <Button variant="ghost" className="text-gray-600">
                 <ShoppingCart className="mr-2 h-5 w-5" /> Carrinho
                 </Button>
-                <div className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center translate-x-1/2 -translate-y-1/2">
-                3
-                </div>
-            </div>
+                {itemCount > 0 && (
+                  <div className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center translate-x-1/2 -translate-y-1/2">
+                    {itemCount}
+                  </div>
+                )}
+            </Link>
             <Button className="bg-blue-700 hover:bg-blue-800 shrink-0">
                 <User className="mr-2 h-5 w-5" /> Entrar
             </Button>

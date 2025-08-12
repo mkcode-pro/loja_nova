@@ -1,21 +1,27 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { Product } from "@/context/CartContext";
 
 interface ProductCardProps {
-  name: string;
-  description: string;
-  price: string;
-  image: string;
-  discount?: string;
+  product: Product;
   view: 'grid' | 'list';
+  onAddToCart: (product: Product, quantity: number) => void;
+  discount?: string;
 }
 
-export const ProductCard = ({ name, description, price, image, discount, view }: ProductCardProps) => {
+export const ProductCard = ({ product, view, onAddToCart, discount }: ProductCardProps) => {
+  const [quantity, setQuantity] = useState(1);
+  const { name, description, price, image } = product;
+
+  const handleAddToCart = () => {
+    onAddToCart(product, quantity);
+  };
+
   const cardClasses = "w-full overflow-hidden shadow-sm relative transition-shadow hover:shadow-lg flex flex-col";
 
-  // Layout para a visualização em LISTA
   if (view === 'list') {
     return (
       <Card className={cn("w-full overflow-hidden shadow-sm relative transition-shadow hover:shadow-lg", "flex flex-row items-center p-2 gap-3")}>
@@ -32,17 +38,16 @@ export const ProductCard = ({ name, description, price, image, discount, view }:
             <h3 className="text-sm font-bold leading-tight truncate">{name}</h3>
             <p className="text-xs text-gray-600 dark:text-gray-400 truncate">{description}</p>
           </div>
-          <p className="text-lg font-bold text-blue-800">{price}</p>
+          <p className="text-lg font-bold text-blue-800">{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(price)}</p>
         </div>
         <div className="flex flex-col items-center gap-2">
-          <Input type="number" defaultValue={1} className="h-9 w-16 text-center" />
-          <Button size="sm" className="bg-blue-700 hover:bg-blue-800 h-9 w-full">Adicionar</Button>
+          <Input type="number" value={quantity} onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))} className="h-9 w-16 text-center" />
+          <Button onClick={handleAddToCart} size="sm" className="bg-blue-700 hover:bg-blue-800 h-9 w-full">Adicionar</Button>
         </div>
       </Card>
     );
   }
 
-  // Layout para a visualização em GRID (padrão)
   return (
     <Card className={cardClasses}>
       {discount && (
@@ -59,10 +64,10 @@ export const ProductCard = ({ name, description, price, image, discount, view }:
           <p className="text-xs text-gray-600 dark:text-gray-400 truncate">{description}</p>
         </div>
         <div className="space-y-2 mt-2">
-            <p className="text-lg font-bold text-blue-800">{price}</p>
+            <p className="text-lg font-bold text-blue-800">{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(price)}</p>
             <div className="flex items-center gap-2">
-            <Input type="number" defaultValue={1} className="h-9 w-16 text-center" />
-            <Button size="sm" className="bg-blue-700 hover:bg-blue-800 h-9 flex-grow">Adicionar</Button>
+            <Input type="number" value={quantity} onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))} className="h-9 w-16 text-center" />
+            <Button onClick={handleAddToCart} size="sm" className="bg-blue-700 hover:bg-blue-800 h-9 flex-grow">Adicionar</Button>
             </div>
         </div>
       </CardContent>
