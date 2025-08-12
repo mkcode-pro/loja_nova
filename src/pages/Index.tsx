@@ -63,14 +63,14 @@ const Index = () => {
           <h2 className="text-lg font-bold text-center text-blue-900">MARCAS</h2>
           <p className="text-center text-gray-600 mb-4">Nossas Marcas</p>
           <div className="grid grid-cols-2 gap-4">
-            {nossasMarcas.map(brand => <BrandCard key={brand.name} src={brand.logo} alt={brand.name} />)}
+            {nossasMarcas.map(brand => <BrandCard key={brand.name} src={brand.logo} alt={brand.name} brandName={brand.name} />)}
           </div>
         </section>
 
         <section>
           <h2 className="text-lg font-bold text-center text-blue-900 mt-6">Marcas Premium</h2>
           <div className="grid grid-cols-2 gap-4 mt-4">
-            {marcasPremium.map(brand => <BrandCard key={brand.name} src={brand.logo} alt={brand.name} />)}
+            {marcasPremium.map(brand => <BrandCard key={brand.name} src={brand.logo} alt={brand.name} brandName={brand.name} />)}
           </div>
         </section>
 
@@ -78,7 +78,7 @@ const Index = () => {
           <h2 className="text-lg font-bold text-center text-blue-900 mt-6">Marcas Nacionais</h2>
           <div className="mt-4 flex justify-center">
             <div className="w-1/2">
-              <BrandCard src={marcasNacionais[0].logo} alt={marcasNacionais[0].name} />
+              <BrandCard src={marcasNacionais[0].logo} alt={marcasNacionais[0].name} brandName={marcasNacionais[0].name} />
             </div>
           </div>
         </section>
