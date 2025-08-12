@@ -24,6 +24,7 @@ export const MobileNav = () => {
           </div>
         </div>
       </div>
+      <div className="h-0.5 bg-gradient-to-r from-red-500 to-blue-600" />
     </nav>
   );
 };
