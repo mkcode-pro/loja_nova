@@ -41,8 +41,8 @@ const Index = () => {
     <div className="bg-gray-50 min-h-screen pb-24">
       <Header />
       <main className="p-4 space-y-6">
-        <div>
-          <img src="/assets/hero-banner.png" alt="Toda loja em promoção" className="w-full rounded-lg shadow-md" />
+        <div className="w-full h-40 bg-gray-200 rounded-lg shadow-md flex items-center justify-center">
+          <p className="text-gray-500">Banner Promocional</p>
         </div>
 
         <div className="space-y-2">
