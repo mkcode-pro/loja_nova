@@ -1,4 +1,5 @@
 import { Header } from "@/components/Header";
+import { MobileNav } from "@/components/MobileNav";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { BrandCard } from "@/components/BrandCard";
@@ -38,9 +39,9 @@ const Index = () => {
   ];
 
   return (
-    <div className="bg-gray-50 min-h-screen pb-24 md:pb-0">
+    <div className="bg-gray-50 min-h-screen flex flex-col">
       <Header />
-      <main className="p-4 space-y-6">
+      <main className="p-4 space-y-6 pb-24 md:pb-6 flex-grow">
         <div className="w-full h-40 bg-gray-200 rounded-lg shadow-md flex items-center justify-center">
           <p className="text-gray-500">Banner Promocional</p>
         </div>
@@ -62,14 +63,14 @@ const Index = () => {
         <section>
           <h2 className="text-lg font-bold text-center text-blue-900">MARCAS</h2>
           <p className="text-center text-gray-600 mb-4">Nossas Marcas</p>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {nossasMarcas.map(brand => <BrandCard key={brand.name} src={brand.logo} alt={brand.name} brandName={brand.name} />)}
           </div>
         </section>
 
         <section>
           <h2 className="text-lg font-bold text-center text-blue-900 mt-6">Marcas Premium</h2>
-          <div className="grid grid-cols-2 gap-4 mt-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mt-4">
             {marcasPremium.map(brand => <BrandCard key={brand.name} src={brand.logo} alt={brand.name} brandName={brand.name} />)}
           </div>
         </section>
@@ -77,7 +78,7 @@ const Index = () => {
         <section>
           <h2 className="text-lg font-bold text-center text-blue-900 mt-6">Marcas Nacionais</h2>
           <div className="mt-4 flex justify-center">
-            <div className="w-1/2">
+            <div className="w-1/2 md:w-1/4 lg:w-1/5">
               <BrandCard src={marcasNacionais[0].logo} alt={marcasNacionais[0].name} brandName={marcasNacionais[0].name} />
             </div>
           </div>
@@ -85,7 +86,7 @@ const Index = () => {
 
         <section>
           <h2 className="text-lg font-bold text-center text-blue-900 mt-6">Diversos</h2>
-          <div className="grid grid-cols-2 gap-4 mt-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mt-4">
             {diversos.map(item => <CategoryCard key={item.title} imageSrc={item.image} title={item.title} />)}
           </div>
         </section>
@@ -100,6 +101,7 @@ const Index = () => {
         </section>
 
       </main>
+      <MobileNav />
       <Footer />
     </div>
   );

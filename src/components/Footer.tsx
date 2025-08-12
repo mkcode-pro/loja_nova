@@ -1,24 +1,43 @@
-import { Button } from "@/components/ui/button";
-import { Menu, ShoppingCart, Store } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const Footer = () => {
   return (
-    <footer className="fixed bottom-0 left-0 right-0 bg-white border-t p-2 flex justify-around items-center z-10 md:static md:justify-center md:gap-8 md:py-6">
-      <Button variant="ghost" className="flex flex-col h-auto text-gray-600">
-        <Store size={24} />
-        <span className="text-xs">Marcas</span>
-      </Button>
-      <Button className="bg-blue-700 hover:bg-blue-800 flex items-center gap-2 px-6 py-2">
-        <Menu size={24} />
-        <span className="font-bold">Menu</span>
-      </Button>
-      <div className="relative">
-        <Button variant="ghost" className="flex flex-col h-auto text-gray-600">
-          <ShoppingCart size={24} />
-          <span className="text-xs">Carrinho</span>
-        </Button>
-        <div className="absolute top-0 right-2 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-          3
+    <footer className="hidden md:block bg-gray-800 text-white mt-auto">
+      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div>
+            <h3 className="text-sm font-semibold tracking-wider uppercase">Categorias</h3>
+            <ul className="mt-4 space-y-2">
+              <li><Link to="#" className="text-base text-gray-300 hover:text-white">Marcas</Link></li>
+              <li><Link to="#" className="text-base text-gray-300 hover:text-white">Emagrecedores</Link></li>
+              <li><Link to="#" className="text-base text-gray-300 hover:text-white">SARMs</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold tracking-wider uppercase">Suporte</h3>
+            <ul className="mt-4 space-y-2">
+              <li><Link to="#" className="text-base text-gray-300 hover:text-white">FAQ</Link></li>
+              <li><Link to="#" className="text-base text-gray-300 hover:text-white">Fretes</Link></li>
+              <li><Link to="#" className="text-base text-gray-300 hover:text-white">Contato</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold tracking-wider uppercase">Empresa</h3>
+            <ul className="mt-4 space-y-2">
+              <li><Link to="#" className="text-base text-gray-300 hover:text-white">Sobre Nós</Link></li>
+              <li><Link to="#" className="text-base text-gray-300 hover:text-white">Ciclos Prontos</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold tracking-wider uppercase">Legal</h3>
+            <ul className="mt-4 space-y-2">
+              <li><Link to="#" className="text-base text-gray-300 hover:text-white">Política de Privacidade</Link></li>
+              <li><Link to="#" className="text-base text-gray-300 hover:text-white">Termos de Serviço</Link></li>
+            </ul>
+          </div>
+        </div>
+        <div className="mt-8 border-t border-gray-700 pt-8 text-center">
+          <p className="text-base text-gray-400">&copy; 2024 Sua Loja. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>

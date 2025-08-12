@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Header } from "@/components/Header";
+import { MobileNav } from "@/components/MobileNav";
 import { Footer } from "@/components/Footer";
 import { ProductCard } from "@/components/ProductCard";
 import { ArrowLeft, LayoutGrid, List } from "lucide-react";
@@ -9,7 +10,6 @@ import { Input } from "@/components/ui/input";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
 
-// Dados de exemplo atualizados
 const productsByCategory: { [key: string]: { subcategories: { name: string; products: any[] }[] } } = {
   "CBD CANABIDIOL": { subcategories: [{ name: "Produtos Injetáveis", products: [] }, { name: "Produtos Orais", products: [ { name: "Óleo CBD 10%", description: "30ml", price: "R$ 299,90", image: "/placeholder.svg" }, { name: "Cápsulas CBD", description: "30 cápsulas", price: "R$ 349,90", image: "/placeholder.svg" } ] }] },
   "PRODUTOS EMAGRECEDORES": { subcategories: [{ name: "Produtos Injetáveis", products: [] }, { name: "Produtos Orais", products: [{ name: "Emagrecedor Lipo-6", description: "60 cápsulas", price: "R$ 189,90", image: "/placeholder.svg" }, { name: "Sineflex Hardcore", description: "150 cápsulas", price: "R$ 120,00", image: "/placeholder.svg" }] }] },
@@ -28,14 +28,14 @@ const CategoryProducts = () => {
   const handleAccordionClick = (id: string) => {
     setTimeout(() => {
       document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 200); // Pequeno atraso para a animação do acordeão começar
+    }, 200);
   };
 
   if (!categoryData) {
     return (
-      <div className="bg-gray-50 min-h-screen pb-24 md:pb-0">
+      <div className="bg-gray-50 min-h-screen flex flex-col">
         <Header />
-        <main className="p-4">
+        <main className="p-4 flex-grow">
           <div className="flex items-center mb-4">
             <Button asChild variant="ghost" size="icon" className="shrink-0">
               <Link to="/">
@@ -47,15 +47,16 @@ const CategoryProducts = () => {
           </div>
           <p className="text-center text-gray-600 mt-8">Categoria não encontrada ou sem produtos.</p>
         </main>
+        <MobileNav />
         <Footer />
       </div>
     );
   }
 
   return (
-    <div className="bg-gray-50 min-h-screen pb-24 md:pb-0">
+    <div className="bg-gray-50 min-h-screen flex flex-col">
       <Header />
-      <main className="p-4 space-y-4">
+      <main className="p-4 space-y-4 pb-24 md:pb-6 flex-grow">
         <div className="flex items-center mb-4">
           <Button asChild variant="ghost" size="icon" className="shrink-0 -ml-2">
             <Link to="/">
@@ -94,7 +95,7 @@ const CategoryProducts = () => {
                 {subcategory.products.length > 0 ? (
                   <div className={cn(
                     "gap-4",
-                    view === 'grid' ? "grid grid-cols-2" : "flex flex-col"
+                    view === 'grid' ? "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4" : "flex flex-col"
                   )}>
                     {subcategory.products.map((product) => (
                       <ProductCard
@@ -112,6 +113,7 @@ const CategoryProducts = () => {
           ))}
         </Accordion>
       </main>
+      <MobileNav />
       <Footer />
     </div>
   );
