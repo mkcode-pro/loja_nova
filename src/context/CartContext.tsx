@@ -8,6 +8,7 @@ export interface Product {
   price: number;
   image: string;
   brand?: string;
+  discount?: string;
 }
 
 // Define a estrutura de um item no carrinho
