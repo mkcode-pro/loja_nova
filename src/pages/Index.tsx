@@ -3,7 +3,7 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { BrandCard } from "@/components/BrandCard";
 import { CategoryCard } from "@/components/CategoryCard";
-import { HelpCircle, Truck, BarChart, Droplet, Scale, Pill, FlaskConical, Package, Shield, Award, Lock, CreditCard } from "lucide-react";
+import { HelpCircle, Truck, BarChart, Award, Lock, CreditCard } from "lucide-react";
 
 const Index = () => {
   const nossasMarcas = [
@@ -29,12 +29,12 @@ const Index = () => {
   ];
 
   const diversos = [
-    { title: "CBD CANABIDIOL", icon: <Droplet size={32} /> },
-    { title: "PRODUTOS EMAGRECEDORES", icon: <Scale size={32} /> },
-    { title: "PRODUTOS DE FARMÁCIA", subtitle: "Temos qualquer medicamento. Consulte no WhatsApp!", icon: <Pill size={32} /> },
-    { title: "PRODUTOS MANIPULADOS", icon: <FlaskConical size={32} /> },
-    { title: "PRODUTOS VARIADOS", icon: <Package size={32} /> },
-    { title: "SARMS", icon: <Shield size={32} /> },
+    { title: "CBD CANABIDIOL", image: "/placeholder.svg" },
+    { title: "PRODUTOS EMAGRECEDORES", image: "/placeholder.svg" },
+    { title: "PRODUTOS DE FARMÁCIA", image: "/placeholder.svg" },
+    { title: "PRODUTOS MANIPULADOS", image: "/placeholder.svg" },
+    { title: "PRODUTOS VARIADOS", image: "/placeholder.svg" },
+    { title: "SARMS", image: "/placeholder.svg" },
   ];
 
   return (
@@ -86,7 +86,7 @@ const Index = () => {
         <section>
           <h2 className="text-lg font-bold text-center text-blue-900 mt-6">Diversos</h2>
           <div className="grid grid-cols-2 gap-4 mt-4">
-            {diversos.map(item => <CategoryCard key={item.title} icon={item.icon} title={item.title} subtitle={item.subtitle} />)}
+            {diversos.map(item => <CategoryCard key={item.title} imageSrc={item.image} title={item.title} />)}
           </div>
         </section>
 

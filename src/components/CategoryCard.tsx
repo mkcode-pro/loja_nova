@@ -1,21 +1,15 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 interface CategoryCardProps {
-  icon: React.ReactNode;
+  imageSrc: string;
   title: string;
-  subtitle?: string;
 }
 
-export const CategoryCard = ({ icon, title, subtitle }: CategoryCardProps) => {
+export const CategoryCard = ({ imageSrc, title }: CategoryCardProps) => {
   return (
-    <Link to={`/diversos/${encodeURIComponent(title)}`} className="block h-full">
-      <div className="border rounded-lg p-2 flex items-center gap-3 bg-white h-full shadow-sm hover:shadow-md transition-shadow">
-        <div className="text-blue-700 shrink-0">{icon}</div>
-        <div className="flex flex-col">
-          <h3 className="font-bold text-sm uppercase">{title}</h3>
-          {subtitle && <p className="text-xs text-gray-500">{subtitle}</p>}
-        </div>
+    <Link to={`/diversos/${encodeURIComponent(title)}`} className="block">
+      <div className="border rounded-lg p-4 flex items-center justify-center h-24 bg-white shadow-sm hover:shadow-md transition-shadow">
+        <img src={imageSrc} alt={title} className="max-h-full max-w-full object-contain" />
       </div>
     </Link>
   );
