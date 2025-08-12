@@ -3,7 +3,7 @@ import { Menu, ShoppingCart, Store } from "lucide-react";
 
 export const Footer = () => {
   return (
-    <footer className="fixed bottom-0 left-0 right-0 bg-white border-t p-2 flex justify-around items-center z-10">
+    <footer className="fixed bottom-0 left-0 right-0 bg-white border-t p-2 flex justify-around items-center z-10 md:static md:justify-center md:gap-8 md:py-6">
       <Button variant="ghost" className="flex flex-col h-auto text-gray-600">
         <Store size={24} />
         <span className="text-xs">Marcas</span>

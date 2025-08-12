@@ -35,7 +35,7 @@ const CategoryProducts = () => {
   const products = productsByCategory[decodedCategoryName.toUpperCase()] || [];
 
   return (
-    <div className="bg-gray-50 min-h-screen pb-24">
+    <div className="bg-gray-50 min-h-screen pb-24 md:pb-0">
       <Header />
       <main className="p-4">
         <div className="flex items-center mb-4">

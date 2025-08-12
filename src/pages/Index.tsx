@@ -38,7 +38,7 @@ const Index = () => {
   ];
 
   return (
-    <div className="bg-gray-50 min-h-screen pb-24">
+    <div className="bg-gray-50 min-h-screen pb-24 md:pb-0">
       <Header />
       <main className="p-4 space-y-6">
         <div className="w-full h-40 bg-gray-200 rounded-lg shadow-md flex items-center justify-center">
