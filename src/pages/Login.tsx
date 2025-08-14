@@ -2,13 +2,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAuth } from "@/context/AuthContext";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simula um login bem-sucedido e redireciona para o checkout
+    login();
     navigate("/checkout");
   };
 

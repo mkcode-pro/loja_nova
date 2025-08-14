@@ -1,12 +1,79 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { User, ShoppingCart, Search, Store } from "lucide-react";
-import { Link } from "react-router-dom";
+import { User, ShoppingCart, Search, Store, LogOut } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export const Header = () => {
   const { getCartItemCount } = useCart();
+  const { isLoggedIn, logout } = useAuth();
+  const navigate = useNavigate();
   const itemCount = getCartItemCount();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
+  const AuthButton = () => {
+    if (isLoggedIn) {
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button className="bg-blue-700 hover:bg-blue-800 shrink-0">
+              <User className="mr-2 h-5 w-5" /> Meu Perfil
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => navigate("/perfil")}>
+              Meus Pedidos
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>
+              <LogOut className="mr-2 h-4 w-4" />
+              Sair
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    }
+    return (
+      <Button asChild className="bg-blue-700 hover:bg-blue-800 shrink-0">
+        <Link to="/login">
+          <User className="mr-2 h-5 w-5" /> Entrar
+        </Link>
+      </Button>
+    );
+  };
+
+  const AuthButtonMobile = () => {
+     if (isLoggedIn) {
+      return (
+        <Button asChild className="bg-blue-700 hover:bg-blue-800 shrink-0">
+          <Link to="/perfil">
+            <User className="mr-2 h-4 w-4" /> Perfil
+          </Link>
+        </Button>
+      );
+    }
+    return (
+       <Button asChild className="bg-blue-700 hover:bg-blue-800 shrink-0">
+        <Link to="/login">
+          <User className="mr-2 h-4 w-4" /> Entrar
+        </Link>
+      </Button>
+    );
+  }
 
   return (
     <header className="bg-white sticky top-0 z-20">
@@ -17,9 +84,7 @@ export const Header = () => {
               <img src="/placeholder.svg" alt="Logo" className="h-8 w-auto" />
             </Link>
             <Input placeholder="Pesquisar..." className="flex-grow" />
-            <Button className="bg-blue-700 hover:bg-blue-800 shrink-0">
-            <User className="mr-2 h-4 w-4" /> Entrar
-            </Button>
+            <AuthButtonMobile />
         </div>
         <div className="h-0.5 bg-gradient-to-r from-red-500 to-blue-600" />
       </div>
@@ -48,9 +113,7 @@ export const Header = () => {
                   </div>
                 )}
             </Link>
-            <Button className="bg-blue-700 hover:bg-blue-800 shrink-0">
-                <User className="mr-2 h-5 w-5" /> Entrar
-            </Button>
+            <AuthButton />
             </nav>
         </div>
       </div>
