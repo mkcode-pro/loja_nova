@@ -9,6 +9,9 @@ import BrandProducts from "./pages/BrandProducts";
 import CategoryProducts from "./pages/CategoryProducts";
 import ProductDetail from "./pages/ProductDetail";
 import CartPage from "./pages/Cart";
+import LoginPage from "./pages/Login";
+import RegisterPage from "./pages/Register";
+import CheckoutPage from "./pages/Checkout";
 import ScrollToTop from "./components/ScrollToTop";
 import { CartProvider } from "./context/CartContext";
 
@@ -28,6 +31,9 @@ const App = () => (
             <Route path="/diversos/:categoryName" element={<CategoryProducts />} />
             <Route path="/produto/:productId" element={<ProductDetail />} />
             <Route path="/carrinho" element={<CartPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/cadastro" element={<RegisterPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

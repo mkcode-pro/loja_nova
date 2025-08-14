@@ -54,7 +54,9 @@ const CartPage = () => {
                 <span>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(getCartTotal())}</span>
               </div>
               <p className="text-sm text-gray-500">Taxas e frete serão calculados na finalização da compra.</p>
-              <Button className="w-full bg-green-600 hover:bg-green-700 mt-2">Finalizar Compra</Button>
+              <Button asChild className="w-full bg-green-600 hover:bg-green-700 mt-2">
+                <Link to="/login">Finalizar Compra</Link>
+              </Button>
             </div>
           </div>
         )}
