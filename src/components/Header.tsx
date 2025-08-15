@@ -37,23 +37,23 @@ export const Header = () => {
   return (
     <header className="sticky top-0 z-20 bg-background/80 backdrop-blur-sm">
       {/* Mobile Header */}
-      <div className="md:hidden p-2">
-        <div className="flex items-center gap-2">
+      <div className="md:hidden p-3">
+        <div className="flex items-center gap-3">
             <Link to="/" className="shrink-0">
-              <img src="/placeholder.svg" alt="Logo" className="h-8 w-auto" />
+              <img src="/placeholder.svg" alt="Logo" className="h-9 w-auto" />
             </Link>
             <div className="relative flex-grow">
               <Input 
                 placeholder="Pesquisar..." 
-                className="rounded-full pl-10 h-9"
+                className="rounded-full pl-10 h-10"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
               <SearchSuggestions suggestions={suggestions} onClose={closeSuggestions} />
             </div>
             <Link to={isLoggedIn ? "/perfil" : "/login"}>
-              <Button variant="ghost" size="icon" className="shrink-0">
+              <Button variant="secondary" size="icon" className="shrink-0 rounded-full h-10 w-10">
                 <User className="h-6 w-6" />
               </Button>
             </Link>
