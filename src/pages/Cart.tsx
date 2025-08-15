@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { MobileNav } from "@/components/MobileNav";
@@ -5,10 +6,43 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCart } from "@/context/CartContext";
-import { Trash2 } from "lucide-react";
+import { Trash2, Truck } from "lucide-react";
+import { shippingRates } from "@/data/shippingRates";
+
+interface ShippingOption {
+  method: string;
+  price: number;
+}
 
 const CartPage = () => {
   const { cartItems, getCartTotal, updateItemQuantity, removeFromCart } = useCart();
+  const [cep, setCep] = useState("");
+  const [shippingOptions, setShippingOptions] = useState<ShippingOption[]>([]);
+  const [selectedShipping, setSelectedShipping] = useState<ShippingOption | null>(null);
+
+  const handleSimulateShipping = async () => {
+    if (cep.length < 8) {
+      alert("Por favor, insira um CEP válido.");
+      return;
+    }
+    // Simulação de busca de estado pelo CEP
+    // Em um projeto real, usaríamos uma API como a ViaCEP
+    const state = "SP"; // Exemplo fixo
+    
+    const options: ShippingOption[] = [];
+    if (shippingRates.SEDEX[state]) {
+      options.push({ method: "SEDEX", price: shippingRates.SEDEX[state] });
+    }
+    if (shippingRates.PAC[state]) {
+      options.push({ method: "PAC", price: shippingRates.PAC[state] });
+    }
+    if (shippingRates.TRANSPORTADORA[state]) {
+      options.push({ method: "Transportadora", price: shippingRates.TRANSPORTADORA[state] });
+    }
+    setShippingOptions(options);
+  };
+
+  const total = getCartTotal() + (selectedShipping?.price || 0);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -27,13 +61,14 @@ const CartPage = () => {
           <div className="space-y-4">
             <div className="bg-card rounded-lg shadow-sm p-4 space-y-4">
               {cartItems.map(item => (
-                <div key={item.id} className="flex items-center gap-4 border-b border-border pb-4 last:border-b-0 last:pb-0">
+                <div key={item.id} className="flex items-start gap-4 border-b border-border pb-4 last:border-b-0 last:pb-0">
                   <img src={item.image} alt={item.name} className="h-16 w-16 object-contain rounded-md" />
                   <div className="flex-grow">
                     <p className="font-semibold">{item.name}</p>
-                    <p className="text-sm text-muted-foreground">{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(item.price)}</p>
+                    <p className="text-xs text-muted-foreground">{item.brand}</p>
+                    <p className="text-sm font-bold mt-1">{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(item.price)}</p>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-col items-end gap-2">
                     <Input
                       type="number"
                       value={item.quantity}
@@ -48,12 +83,46 @@ const CartPage = () => {
               ))}
             </div>
 
+            <div className="bg-card rounded-lg shadow-sm p-4 space-y-4">
+              <div className="flex gap-2">
+                <Input placeholder="Cupom de desconto" />
+                <Button variant="secondary">Aplicar</Button>
+              </div>
+            </div>
+
+            <div className="bg-card rounded-lg shadow-sm p-4 space-y-4">
+              <h2 className="font-semibold flex items-center gap-2"><Truck className="h-5 w-5" /> Calcular Frete</h2>
+              <div className="flex gap-2">
+                <Input placeholder="Digite seu CEP" value={cep} onChange={(e) => setCep(e.target.value)} />
+                <Button variant="secondary" onClick={handleSimulateShipping}>Calcular</Button>
+              </div>
+              {shippingOptions.length > 0 && (
+                <div className="space-y-2 pt-2">
+                  {shippingOptions.map(option => (
+                    <div key={option.method} onClick={() => setSelectedShipping(option)} className={`flex justify-between items-center p-3 rounded-md cursor-pointer border ${selectedShipping?.method === option.method ? 'border-primary bg-primary/10' : 'border-border'}`}>
+                      <div>
+                        <p className="font-semibold">{option.method}</p>
+                      </div>
+                      <p className="font-bold">{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(option.price)}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <div className="bg-card rounded-lg shadow-sm p-4 space-y-2">
-              <div className="flex justify-between font-semibold text-lg">
+              <div className="flex justify-between">
                 <span>Subtotal</span>
                 <span>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(getCartTotal())}</span>
               </div>
-              <p className="text-sm text-muted-foreground">Taxas e frete serão calculados na finalização da compra.</p>
+              <div className="flex justify-between">
+                <span>Frete</span>
+                <span>{selectedShipping ? new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(selectedShipping.price) : '--'}</span>
+              </div>
+              <div className="flex justify-between font-bold text-lg border-t border-border pt-2 mt-2">
+                <span>Total</span>
+                <span>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(total)}</span>
+              </div>
               <Button asChild className="w-full mt-2">
                 <Link to="/login">Finalizar Compra</Link>
               </Button>
