@@ -16,6 +16,7 @@ interface AuthContextType {
   login: (email, password) => Promise<any>;
   logout: () => Promise<any>;
   signUp: (email, password, options) => Promise<any>;
+  updateProfile: (profileData: Profile) => Promise<any>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -32,31 +33,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setSession(session);
       setUser(session?.user ?? null);
       if (session?.user) {
-        const { data: profileData } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', session.user.id)
-          .single();
-        setProfile(profileData);
+        setProfile(session.user.user_metadata as Profile);
       }
       setIsLoading(false);
     };
 
     getSessionAndProfile();
 
-    const { data: authListener } = supabase.auth.onAuthStateChange(async (_event, session) => {
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
       setUser(session?.user ?? null);
-      if (session?.user) {
-        const { data: profileData } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', session.user.id)
-          .single();
-        setProfile(profileData);
-      } else {
-        setProfile(null);
-      }
+      setProfile(session?.user?.user_metadata as Profile || null);
     });
 
     return () => {
@@ -76,6 +63,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return await supabase.auth.signUp({ email, password, options });
   };
 
+  const updateProfile = async (profileData: Profile) => {
+    const { data, error } = await supabase.auth.updateUser({
+      data: profileData
+    });
+    if (!error && data.user) {
+      setProfile(data.user.user_metadata as Profile);
+    }
+    return { data, error };
+  };
+
   const value = {
     isLoggedIn: !!session,
     isLoading,
@@ -84,6 +81,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     login,
     logout,
     signUp,
+    updateProfile,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

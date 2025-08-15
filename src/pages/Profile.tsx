@@ -8,10 +8,9 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { supabase } from "@/lib/supabaseClient";
 
 const ProfilePage = () => {
-  const { user, profile, logout, isLoading } = useAuth();
+  const { user, profile, logout, isLoading, updateProfile } = useAuth();
   const navigate = useNavigate();
 
   const [fullName, setFullName] = useState("");
@@ -47,10 +46,7 @@ const ProfilePage = () => {
   const handleUpdateProfile = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoadingUpdate(true);
-    const { error } = await supabase
-      .from('profiles')
-      .update({ full_name: fullName, cpf, whatsapp })
-      .eq('id', user?.id);
+    const { error } = await updateProfile({ full_name: fullName, cpf, whatsapp });
     
     if (error) {
       toast.error("Erro ao atualizar o perfil: " + error.message);
@@ -70,7 +66,11 @@ const ProfilePage = () => {
   };
 
   if (isLoading) {
-    return <div>Carregando...</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p>Carregando...</p>
+      </div>
+    );
   }
 
   return (
