@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { useCart } from "@/context/CartContext";
 import { Trash2, Truck } from "lucide-react";
 import { shippingRates } from "@/data/shippingRates";
+import { toast } from "sonner";
 
 interface ShippingOption {
   method: string;
@@ -19,27 +20,52 @@ const CartPage = () => {
   const [cep, setCep] = useState("");
   const [shippingOptions, setShippingOptions] = useState<ShippingOption[]>([]);
   const [selectedShipping, setSelectedShipping] = useState<ShippingOption | null>(null);
+  const [isLoadingShipping, setIsLoadingShipping] = useState(false);
 
   const handleSimulateShipping = async () => {
-    if (cep.length < 8) {
-      alert("Por favor, insira um CEP válido.");
+    const cleanedCep = cep.replace(/\D/g, ""); // Remove caracteres não numéricos
+    if (cleanedCep.length !== 8) {
+      toast.error("Por favor, insira um CEP válido com 8 dígitos.");
       return;
     }
-    // Simulação de busca de estado pelo CEP
-    // Em um projeto real, usaríamos uma API como a ViaCEP
-    const state = "SP"; // Exemplo fixo
-    
-    const options: ShippingOption[] = [];
-    if (shippingRates.SEDEX[state]) {
-      options.push({ method: "SEDEX", price: shippingRates.SEDEX[state] });
+
+    setIsLoadingShipping(true);
+    setShippingOptions([]);
+    setSelectedShipping(null);
+
+    try {
+      const response = await fetch(`https://viacep.com.br/ws/${cleanedCep}/json/`);
+      const data = await response.json();
+
+      if (data.erro) {
+        toast.error("CEP não encontrado. Verifique o número digitado.");
+        return;
+      }
+
+      const state = data.uf.toUpperCase();
+      const options: ShippingOption[] = [];
+
+      if (shippingRates.SEDEX[state]) {
+        options.push({ method: "SEDEX", price: shippingRates.SEDEX[state] });
+      }
+      if (shippingRates.PAC[state]) {
+        options.push({ method: "PAC", price: shippingRates.PAC[state] });
+      }
+      if (shippingRates.TRANSPORTADORA[state]) {
+        options.push({ method: "Transportadora", price: shippingRates.TRANSPORTADORA[state] });
+      }
+      
+      if (options.length === 0) {
+        toast.info("Não há opções de entrega para este CEP.");
+      }
+
+      setShippingOptions(options);
+
+    } catch (error) {
+      toast.error("Não foi possível calcular o frete. Tente novamente.");
+    } finally {
+      setIsLoadingShipping(false);
     }
-    if (shippingRates.PAC[state]) {
-      options.push({ method: "PAC", price: shippingRates.PAC[state] });
-    }
-    if (shippingRates.TRANSPORTADORA[state]) {
-      options.push({ method: "Transportadora", price: shippingRates.TRANSPORTADORA[state] });
-    }
-    setShippingOptions(options);
   };
 
   const total = getCartTotal() + (selectedShipping?.price || 0);
@@ -94,7 +120,9 @@ const CartPage = () => {
               <h2 className="font-semibold flex items-center gap-2"><Truck className="h-5 w-5" /> Calcular Frete</h2>
               <div className="flex gap-2">
                 <Input placeholder="Digite seu CEP" value={cep} onChange={(e) => setCep(e.target.value)} />
-                <Button variant="secondary" onClick={handleSimulateShipping}>Calcular</Button>
+                <Button variant="secondary" onClick={handleSimulateShipping} disabled={isLoadingShipping}>
+                  {isLoadingShipping ? "Calculando..." : "Calcular"}
+                </Button>
               </div>
               {shippingOptions.length > 0 && (
                 <div className="space-y-2 pt-2">
