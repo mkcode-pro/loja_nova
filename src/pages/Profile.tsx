@@ -30,6 +30,20 @@ const ProfilePage = () => {
     }
   }, [user, profile, isLoading, navigate]);
 
+  const formatCPF = (value: string) => {
+    const cleaned = value.replace(/\D/g, "");
+    const match = cleaned.match(/^(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})$/);
+    if (!match) return value;
+    return [match[1], match[2], match[3]].filter(Boolean).join(".") + (match[4] ? `-${match[4]}` : "");
+  };
+
+  const formatWhatsApp = (value: string) => {
+    const cleaned = value.replace(/\D/g, "");
+    const match = cleaned.match(/^(\d{0,2})(\d{0,5})(\d{0,4})$/);
+    if (!match) return value;
+    return (match[1] ? `(${match[1]}` : "") + (match[2] ? `) ${match[2]}` : "") + (match[3] ? `-${match[3]}` : "");
+  };
+
   const handleUpdateProfile = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoadingUpdate(true);
@@ -78,11 +92,11 @@ const ProfilePage = () => {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="cpf">CPF</Label>
-                <Input id="cpf" value={cpf} onChange={(e) => setCpf(e.target.value)} />
+                <Input id="cpf" value={cpf} onChange={(e) => setCpf(formatCPF(e.target.value))} maxLength={14} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="whatsapp">WhatsApp</Label>
-                <Input id="whatsapp" value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} />
+                <Input id="whatsapp" value={whatsapp} onChange={(e) => setWhatsapp(formatWhatsApp(e.target.value))} maxLength={15} />
               </div>
               <Button type="submit" className="w-full" disabled={loadingUpdate}>
                 {loadingUpdate ? "Salvando..." : "Salvar Alterações"}
