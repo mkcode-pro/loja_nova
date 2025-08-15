@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { supabase } from "@/lib/supabaseClient";
 
 const ProfilePage = () => {
   const { user, profile, logout, isLoading, updateProfile } = useAuth();
@@ -17,6 +18,7 @@ const ProfilePage = () => {
   const [cpf, setCpf] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [loadingUpdate, setLoadingUpdate] = useState(false);
+  const [orders, setOrders] = useState<any[]>([]);
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -26,6 +28,13 @@ const ProfilePage = () => {
       setFullName(profile.full_name || "");
       setCpf(profile.cpf || "");
       setWhatsapp(profile.whatsapp || "");
+    }
+    if (user) {
+      const fetchOrders = async () => {
+        const { data } = await supabase.from('orders').select('*').eq('user_id', user.id);
+        setOrders(data || []);
+      };
+      fetchOrders();
     }
   }, [user, profile, isLoading, navigate]);
 
@@ -106,7 +115,17 @@ const ProfilePage = () => {
 
           <div className="bg-card p-6 rounded-lg shadow-md space-y-4">
             <h2 className="text-lg font-semibold">Meus Pedidos</h2>
-            <p className="text-muted-foreground">Você ainda não tem pedidos.</p>
+            {orders.length > 0 ? (
+              orders.map(order => (
+                <div key={order.id} className="border-b pb-2">
+                  <p>Pedido #{order.id}</p>
+                  <p>Total: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(order.total)}</p>
+                  <p>Data: {new Date(order.created_at).toLocaleDateString('pt-BR')}</p>
+                </div>
+              ))
+            ) : (
+              <p className="text-muted-foreground">Você ainda não tem pedidos.</p>
+            )}
           </div>
 
           <div className="bg-card p-6 rounded-lg shadow-md space-y-4">
