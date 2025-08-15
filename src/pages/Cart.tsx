@@ -22,8 +22,19 @@ const CartPage = () => {
   const [selectedShipping, setSelectedShipping] = useState<ShippingOption | null>(null);
   const [isLoadingShipping, setIsLoadingShipping] = useState(false);
 
+  const handleCepChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const rawValue = e.target.value.replace(/\D/g, ""); // Remove tudo que não é dígito
+    if (rawValue.length <= 8) {
+      let formattedCep = rawValue;
+      if (rawValue.length > 5) {
+        formattedCep = rawValue.slice(0, 5) + "-" + rawValue.slice(5);
+      }
+      setCep(formattedCep);
+    }
+  };
+
   const handleSimulateShipping = async () => {
-    const cleanedCep = cep.replace(/\D/g, ""); // Remove caracteres não numéricos
+    const cleanedCep = cep.replace(/\D/g, "");
     if (cleanedCep.length !== 8) {
       toast.error("Por favor, insira um CEP válido com 8 dígitos.");
       return;
@@ -119,7 +130,7 @@ const CartPage = () => {
             <div className="bg-card rounded-lg shadow-sm p-4 space-y-4">
               <h2 className="font-semibold flex items-center gap-2"><Truck className="h-5 w-5" /> Calcular Frete</h2>
               <div className="flex gap-2">
-                <Input placeholder="Digite seu CEP" value={cep} onChange={(e) => setCep(e.target.value)} />
+                <Input placeholder="Digite seu CEP" value={cep} onChange={handleCepChange} maxLength={9} />
                 <Button variant="secondary" onClick={handleSimulateShipping} disabled={isLoadingShipping}>
                   {isLoadingShipping ? "Calculando..." : "Calcular"}
                 </Button>
