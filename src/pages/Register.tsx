@@ -40,9 +40,18 @@ const RegisterPage = () => {
 
     if (error) {
       toast.error(error.message);
+      setLoading(false);
+      return;
+    }
+    
+    toast.success("Conta criada com sucesso!");
+
+    const redirectPath = sessionStorage.getItem('redirectAfterAuth');
+    if (redirectPath) {
+      sessionStorage.removeItem('redirectAfterAuth');
+      navigate(redirectPath);
     } else {
-      toast.success("Conta criada com sucesso!");
-      navigate("/checkout"); // Redireciona para o checkout
+      navigate('/perfil');
     }
     setLoading(false);
   };

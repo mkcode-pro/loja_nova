@@ -22,9 +22,18 @@ const LoginPage = () => {
     const { error } = await login(email, password);
     if (error) {
       toast.error(error.message);
+      setLoading(false);
+      return;
+    }
+    
+    toast.success("Login realizado com sucesso!");
+    
+    const redirectPath = sessionStorage.getItem('redirectAfterAuth');
+    if (redirectPath) {
+      sessionStorage.removeItem('redirectAfterAuth');
+      navigate(redirectPath);
     } else {
-      toast.success("Login realizado com sucesso!");
-      navigate("/");
+      navigate('/perfil');
     }
     setLoading(false);
   };
