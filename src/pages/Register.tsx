@@ -8,25 +8,43 @@ import { toast } from "sonner";
 import { Header } from "@/components/Header";
 import { MobileNav } from "@/components/MobileNav";
 import { Footer } from "@/components/Footer";
+import { useAuth } from "@/context/AuthContext";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
+  const { signUp } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData(e.currentTarget);
-    const password = formData.get("password");
-    const confirmPassword = formData.get("confirmPassword");
+    const name = formData.get("name") as string;
+    const cpf = formData.get("cpf") as string;
+    const whatsapp = formData.get("whatsapp") as string;
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    const confirmPassword = formData.get("confirmPassword") as string;
 
     if (password !== confirmPassword) {
       toast.error("As senhas não coincidem.");
+      setLoading(false);
       return;
     }
     
-    // Simula um cadastro bem-sucedido e redireciona para o checkout
-    navigate("/checkout");
+    const { error } = await signUp(email, password, {
+      data: { full_name: name, cpf, whatsapp }
+    });
+
+    if (error) {
+      toast.error(error.message);
+    } else {
+      toast.success("Cadastro realizado! Verifique seu e-mail para confirmar a conta.");
+      navigate("/login");
+    }
+    setLoading(false);
   };
 
   const formatCPF = (value: string) => {
@@ -83,8 +101,8 @@ const RegisterPage = () => {
                 {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </Button>
             </div>
-            <Button type="submit" className="w-full">
-              Criar Conta
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? "Criando conta..." : "Criar Conta"}
             </Button>
           </form>
           <div className="text-center">
