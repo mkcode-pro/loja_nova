@@ -41,8 +41,8 @@ const RegisterPage = () => {
     if (error) {
       toast.error(error.message);
     } else {
-      toast.success("Cadastro realizado! Verifique seu e-mail para confirmar a conta.");
-      navigate("/login");
+      toast.success("Conta criada com sucesso!");
+      navigate("/checkout"); // Redireciona para o checkout
     }
     setLoading(false);
   };
