@@ -1,11 +1,37 @@
+import { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MobileNav } from "@/components/MobileNav";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAuth } from "@/context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutPage = () => {
+  const { isLoggedIn, profile, isLoading } = useAuth();
+  const navigate = useNavigate();
+
+  const [name, setName] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [whatsapp, setWhatsapp] = useState("");
+
+  useEffect(() => {
+    if (!isLoading && !isLoggedIn) {
+      // Se não estiver logado e o carregamento inicial terminou, redireciona para o login
+      navigate('/login');
+    }
+    if (profile) {
+      setName(profile.full_name || "");
+      setCpf(profile.cpf || "");
+      setWhatsapp(profile.whatsapp || "");
+    }
+  }, [profile, isLoggedIn, isLoading, navigate]);
+
+  if (isLoading) {
+    return <div>Carregando...</div>; // Ou um componente de spinner
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -18,17 +44,17 @@ const CheckoutPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="name">Nome Completo</Label>
-                <Input id="name" placeholder="Seu nome completo" />
+                <Input id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Seu nome completo" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="cpf">CPF</Label>
-                <Input id="cpf" placeholder="000.000.000-00" />
+                <Input id="cpf" value={cpf} onChange={(e) => setCpf(e.target.value)} placeholder="000.000.000-00" />
               </div>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="whatsapp">WhatsApp</Label>
-              <Input id="whatsapp" placeholder="(00) 00000-0000" />
+              <Input id="whatsapp" value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} placeholder="(00) 00000-0000" />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
