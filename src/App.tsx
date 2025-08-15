@@ -15,6 +15,7 @@ import CheckoutPage from "./pages/Checkout";
 import ProfilePage from "./pages/Profile";
 import OrderSummaryPage from "./pages/OrderSummary";
 import PaymentPage from "./pages/Payment";
+import OrderConfirmationPage from "./pages/OrderConfirmation";
 import ScrollToTop from "./components/ScrollToTop";
 import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
@@ -44,6 +45,7 @@ const App = () => (
                 <Route path="/perfil" element={<ProfilePage />} />
                 <Route path="/resumo" element={<OrderSummaryPage />} />
                 <Route path="/pagamento" element={<PaymentPage />} />
+                <Route path="/confirmacao-pedido" element={<OrderConfirmationPage />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
