@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
 import { Trash2, Truck } from "lucide-react";
 import { shippingRates } from "@/data/shippingRates";
 import { toast } from "sonner";
@@ -17,6 +18,7 @@ interface ShippingOption {
 
 const CartPage = () => {
   const { cartItems, getCartTotal, updateItemQuantity, removeFromCart } = useCart();
+  const { isLoggedIn } = useAuth();
   const [cep, setCep] = useState("");
   const [shippingOptions, setShippingOptions] = useState<ShippingOption[]>([]);
   const [selectedShipping, setSelectedShipping] = useState<ShippingOption | null>(null);
@@ -163,7 +165,7 @@ const CartPage = () => {
                 <span>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(total)}</span>
               </div>
               <Button asChild className="w-full mt-2">
-                <Link to="/login">Finalizar Compra</Link>
+                <Link to={isLoggedIn ? "/checkout" : "/login"}>CONFIRMAR CARRINHO</Link>
               </Button>
             </div>
           </div>
