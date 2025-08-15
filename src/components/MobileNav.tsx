@@ -1,37 +1,46 @@
 import { Button } from "@/components/ui/button";
-import { Menu, ShoppingCart, Store } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useCart } from "@/context/CartContext";
+import { Home, Search, User, ShoppingCart, Sparkles } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { cn } from "@/lib/utils";
+
+const navItems = [
+  { href: "/", icon: Home, label: "Início" },
+  { href: "/produtos", icon: Search, label: "Produtos" },
+  { href: "/central", icon: Sparkles, label: "Central" },
+  { href: "/perfil", icon: User, label: "Conta" },
+  { href: "/carrinho", icon: ShoppingCart, label: "Carrinho" },
+];
 
 export const MobileNav = () => {
-  const { getCartItemCount } = useCart();
-  const itemCount = getCartItemCount();
+  const location = useLocation();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white z-10 md:hidden">
-      <div className="h-0.5 bg-gradient-to-r from-red-500 to-blue-600" />
-      <div className="p-2 flex justify-around items-center">
-        <Button variant="ghost" className="flex flex-col h-auto text-gray-600">
-          <Store size={24} />
-          <span className="text-xs">Marcas</span>
-        </Button>
-        <Button className="bg-blue-700 hover:bg-blue-800 flex items-center gap-2 px-6 py-2">
-          <Menu size={24} />
-          <span className="font-bold">Menu</span>
-        </Button>
-        <Link to="/carrinho" className="relative">
-          <Button variant="ghost" className="flex flex-col h-auto text-gray-600">
-            <ShoppingCart size={24} />
-            <span className="text-xs">Carrinho</span>
-          </Button>
-          {itemCount > 0 && (
-            <div className="absolute top-0 right-2 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-              {itemCount}
-            </div>
-          )}
-        </Link>
+    <div className="fixed bottom-4 left-0 right-0 px-4 z-50 md:hidden">
+      <div className="bg-card border border-border rounded-full flex justify-around items-center p-2 max-w-sm mx-auto shadow-lg">
+        {navItems.map((item) => {
+          const isActive = location.pathname === item.href;
+          if (item.label === "Central") {
+            return (
+              <Link key={item.label} to={item.href} className="-mt-8">
+                <Button size="icon" className="rounded-full h-16 w-16 bg-primary shadow-lg shadow-primary/50">
+                  <item.icon className="h-8 w-8" />
+                </Button>
+              </Link>
+            );
+          }
+          return (
+            <Link key={item.label} to={item.href} className="flex-1">
+              <div className={cn(
+                "flex flex-col items-center gap-1 transition-colors",
+                isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"
+              )}>
+                <item.icon className="h-6 w-6" />
+                <span className="text-xs font-medium">{item.label}</span>
+              </div>
+            </Link>
+          );
+        })}
       </div>
-      <div className="h-0.5 bg-gradient-to-r from-red-500 to-blue-600" />
-    </nav>
+    </div>
   );
 };
