@@ -35,31 +35,28 @@ export const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 z-20">
+    <header className="sticky top-0 z-20 bg-background/80 backdrop-blur-sm">
       {/* Mobile Header */}
-      <div className="md:hidden p-4 space-y-2">
-        <div className="flex items-center justify-between">
-            <Link to="/" className="text-lg font-bold">
-              <span className="text-foreground">IMPERIO</span>
-              <span className="text-primary">PHARMA</span>
+      <div className="md:hidden p-2">
+        <div className="flex items-center gap-2">
+            <Link to="/" className="shrink-0">
+              <img src="/placeholder.svg" alt="Logo" className="h-8 w-auto" />
             </Link>
-            <div className="flex items-center gap-1">
-              <Link to={isLoggedIn ? "/perfil" : "/login"}>
-                <Button variant="ghost" size="icon">
-                  <User className="h-6 w-6" />
-                </Button>
-              </Link>
+            <div className="relative flex-grow">
+              <Input 
+                placeholder="Pesquisar..." 
+                className="rounded-full pl-10 h-9"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <SearchSuggestions suggestions={suggestions} onClose={closeSuggestions} />
             </div>
-        </div>
-        <div className="relative">
-          <Input 
-            placeholder="Pesquisar..." 
-            className="rounded-full pl-10"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-          <SearchSuggestions suggestions={suggestions} onClose={closeSuggestions} />
+            <Link to={isLoggedIn ? "/perfil" : "/login"}>
+              <Button variant="ghost" size="icon" className="shrink-0">
+                <User className="h-6 w-6" />
+              </Button>
+            </Link>
         </div>
       </div>
 
