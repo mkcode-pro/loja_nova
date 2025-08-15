@@ -10,7 +10,7 @@ const CheckoutPage = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="p-4 flex-grow pb-32 md:pb-6">
-        <h1 className="text-2xl font-bold mb-4">Finalizar Compra</h1>
+        <h1 className="text-2xl font-bold mb-4">Checkout</h1>
         <div className="bg-card p-6 rounded-lg shadow-md">
           <form className="space-y-4">
             <h2 className="text-lg font-semibold border-b pb-2">Informações de Entrega</h2>
