@@ -1,16 +1,19 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { MobileNav } from "@/components/MobileNav";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import { useCart } from "@/context/CartContext";
 import { useOrder } from "@/context/OrderContext";
-import { toast } from "sonner";
 
 const OrderSummaryPage = () => {
   const navigate = useNavigate();
   const { cartItems, getCartTotal } = useCart();
   const { shippingAddress, shippingMethod } = useOrder();
+  const [addInsurance, setAddInsurance] = useState(false);
 
   if (!shippingAddress || !shippingMethod) {
     return (
@@ -30,14 +33,10 @@ const OrderSummaryPage = () => {
     sessionStorage.setItem('editingFromSummary', 'true');
     navigate('/carrinho');
   };
-  
-  const handleFinalizeOrder = () => {
-    toast.success("Pedido finalizado com sucesso! (Simulação)");
-    // Aqui, no futuro, limparíamos o carrinho e o pedido
-    navigate('/');
-  }
 
-  const total = getCartTotal() + shippingMethod.price;
+  const subtotal = getCartTotal();
+  const insuranceCost = addInsurance ? subtotal * 0.20 : 0;
+  const total = subtotal + shippingMethod.price + insuranceCost;
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -71,22 +70,41 @@ const OrderSummaryPage = () => {
           ))}
         </div>
 
+        <div className="bg-card p-4 rounded-lg shadow-sm space-y-3">
+            <h2 className="text-lg font-semibold">Seguro Império</h2>
+            <p className="text-sm text-muted-foreground">
+                Seguro Opcional (20%). Cobre extravio, roubo e danos durante o transporte. É obrigatório filmar a embalagem intacta antes de abri-la para solicitar esse seguro, se preciso.
+            </p>
+            <div className="flex items-center space-x-2 pt-2">
+                <Checkbox id="insurance" checked={addInsurance} onCheckedChange={(checked) => setAddInsurance(checked as boolean)} />
+                <Label htmlFor="insurance" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                    Desejo contratar o seguro (+20% do Total Parcial)
+                </Label>
+            </div>
+        </div>
+
         <div className="bg-card p-4 rounded-lg shadow-sm space-y-2">
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Subtotal</span>
-            <span>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(getCartTotal())}</span>
+            <span>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(subtotal)}</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Frete ({shippingMethod.method})</span>
             <span>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(shippingMethod.price)}</span>
           </div>
+          {addInsurance && (
+            <div className="flex justify-between text-sm text-primary">
+                <span className="font-semibold">Seguro Império</span>
+                <span className="font-semibold">{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(insuranceCost)}</span>
+            </div>
+          )}
           <div className="flex justify-between font-bold text-lg border-t pt-2 mt-2">
             <span>Total</span>
             <span>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(total)}</span>
           </div>
         </div>
         
-        <Button className="w-full" onClick={handleFinalizeOrder}>FINALIZAR PEDIDO</Button>
+        <Button className="w-full" onClick={() => navigate('/pagamento')}>IR PARA PAGAMENTO</Button>
       </main>
       <MobileNav />
       <Footer />
