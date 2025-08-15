@@ -26,8 +26,14 @@ const CartPage = () => {
   const [isLoadingShipping, setIsLoadingShipping] = useState(false);
 
   const handleConfirmCart = () => {
-    sessionStorage.setItem('redirectAfterAuth', '/checkout');
-    navigate(isLoggedIn ? '/checkout' : '/login');
+    const editingFromSummary = sessionStorage.getItem('editingFromSummary');
+    if (editingFromSummary) {
+      sessionStorage.removeItem('editingFromSummary');
+      navigate('/resumo');
+    } else {
+      sessionStorage.setItem('redirectAfterAuth', '/checkout');
+      navigate(isLoggedIn ? '/checkout' : '/login');
+    }
   };
 
   const handleCepChange = (e: React.ChangeEvent<HTMLInputElement>) => {
