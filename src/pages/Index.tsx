@@ -41,7 +41,7 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="p-4 space-y-6 pb-24 md:pb-6 flex-grow">
+      <main className="px-4 space-y-6 pb-32 md:pb-6 flex-grow">
         <div className="w-full h-40 bg-card rounded-lg shadow-md flex items-center justify-center">
           <p className="text-muted-foreground">Banner Promocional</p>
         </div>

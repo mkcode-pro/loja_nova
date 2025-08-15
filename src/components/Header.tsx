@@ -10,20 +10,22 @@ export const Header = () => {
   const itemCount = getCartItemCount();
 
   return (
-    <header className="bg-card sticky top-0 z-20">
+    <header className="sticky top-0 z-20">
       {/* Mobile Header */}
-      <div className="md:hidden flex items-center justify-between p-4">
-        <Link to="/" className="text-lg font-bold">
-          <span className="text-foreground">IMPERIO</span>
-          <span className="text-primary">PHARMA</span>
-        </Link>
-        <Button variant="ghost" size="icon">
-          <Menu className="h-6 w-6" />
-        </Button>
+      <div className="md:hidden p-4">
+        <div className="bg-card border border-border rounded-full flex items-center justify-between p-2 shadow-lg">
+            <Link to="/" className="text-lg font-bold pl-4">
+            <span className="text-foreground">IMPERIO</span>
+            <span className="text-primary">PHARMA</span>
+            </Link>
+            <Button variant="ghost" size="icon">
+            <Menu className="h-6 w-6" />
+            </Button>
+        </div>
       </div>
 
       {/* Desktop Header */}
-      <div className="hidden md:flex items-center justify-between p-4 max-w-7xl mx-auto">
+      <div className="hidden md:flex bg-card items-center justify-between p-4 max-w-7xl mx-auto">
         <Link to="/" className="text-2xl font-bold">
           <span className="text-foreground">IMPERIO</span>
           <span className="text-primary">PHARMA</span>
