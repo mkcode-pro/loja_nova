@@ -7,11 +7,11 @@ import { Label } from "@/components/ui/label";
 
 const CheckoutPage = () => {
   return (
-    <div className="bg-gray-50 min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="p-4 flex-grow">
+      <main className="p-4 flex-grow pb-32 md:pb-6">
         <h1 className="text-2xl font-bold mb-4">Finalizar Compra</h1>
-        <div className="bg-white p-6 rounded-lg shadow-md">
+        <div className="bg-card p-6 rounded-lg shadow-md">
           <form className="space-y-4">
             <h2 className="text-lg font-semibold border-b pb-2">Informações de Entrega</h2>
             
@@ -68,7 +68,7 @@ const CheckoutPage = () => {
               </div>
             </div>
 
-            <Button className="w-full bg-green-600 hover:bg-green-700 mt-4">
+            <Button className="w-full mt-4">
               Ir para o Pagamento
             </Button>
           </form>

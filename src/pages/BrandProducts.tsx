@@ -46,9 +46,9 @@ const BrandProducts = () => {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="p-4 space-y-4 pb-24 md:pb-6 flex-grow">
+      <main className="p-4 space-y-4 pb-32 md:pb-6 flex-grow">
         <div className="flex items-center mb-4">
           <Button asChild variant="ghost" size="icon" className="shrink-0 -ml-2">
             <Link to="/">
@@ -58,7 +58,7 @@ const BrandProducts = () => {
           </Button>
         </div>
 
-        <div className="border rounded-lg p-4 flex items-center justify-center h-24 bg-white shadow-sm">
+        <div className="border rounded-lg p-4 flex items-center justify-center h-24 bg-card shadow-sm">
           <img src={brandData.logo} alt={decodedBrandName} className="max-h-full max-w-full object-contain" />
         </div>
 
@@ -66,15 +66,15 @@ const BrandProducts = () => {
 
         <Input placeholder={`Buscar produtos em ${decodedBrandName}...`} />
 
-        <div className="flex items-center justify-center bg-gray-200 p-1 rounded-lg">
-          <Button onClick={() => setView('grid')} className={cn("w-full", view === 'grid' ? 'bg-white text-blue-700 shadow' : 'bg-transparent text-gray-600 shadow-none')}><LayoutGrid className="mr-2 h-4 w-4" /> Grid</Button>
-          <Button onClick={() => setView('list')} className={cn("w-full", view === 'list' ? 'bg-white text-blue-700 shadow' : 'bg-transparent text-gray-600 shadow-none')}><List className="mr-2 h-4 w-4" /> Lista</Button>
+        <div className="flex items-center justify-center bg-card border p-1 rounded-lg">
+          <Button onClick={() => setView('grid')} className={cn("w-full", view === 'grid' ? 'bg-background text-primary shadow' : 'bg-transparent text-muted-foreground shadow-none')}><LayoutGrid className="mr-2 h-4 w-4" /> Grid</Button>
+          <Button onClick={() => setView('list')} className={cn("w-full", view === 'list' ? 'bg-background text-primary shadow' : 'bg-transparent text-muted-foreground shadow-none')}><List className="mr-2 h-4 w-4" /> Lista</Button>
         </div>
 
         <Accordion type="multiple" className="w-full space-y-2">
           {brandData.subcategories.map((subcategory, index) => (
-            <AccordionItem key={subcategory.name} value={subcategory.name} id={`brand-accordion-${index}`} className="bg-white border-none rounded-lg shadow-sm overflow-hidden">
-              <AccordionTrigger onClick={() => handleAccordionClick(`brand-accordion-${index}`)} className="bg-blue-800 text-white hover:no-underline px-4 py-3 rounded-t-lg">{subcategory.name}</AccordionTrigger>
+            <AccordionItem key={subcategory.name} value={subcategory.name} id={`brand-accordion-${index}`} className="bg-card border-none rounded-lg shadow-sm overflow-hidden">
+              <AccordionTrigger onClick={() => handleAccordionClick(`brand-accordion-${index}`)} className="bg-primary text-primary-foreground hover:no-underline px-4 py-3 rounded-t-lg">{subcategory.name}</AccordionTrigger>
               <AccordionContent className="p-4">
                 {subcategory.products.length > 0 ? (
                   <div className={cn("gap-4", view === 'grid' ? "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4" : "flex flex-col")}>
@@ -83,7 +83,7 @@ const BrandProducts = () => {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-sm text-gray-500 text-center py-4">Nenhum produto nesta categoria.</p>
+                  <p className="text-sm text-muted-foreground text-center py-4">Nenhum produto nesta categoria.</p>
                 )}
               </AccordionContent>
             </AccordionItem>

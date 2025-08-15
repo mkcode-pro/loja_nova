@@ -33,7 +33,7 @@ const CategoryProducts = () => {
 
   if (!categoryData) {
     return (
-      <div className="bg-gray-50 min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col">
         <Header />
         <main className="p-4 flex-grow">
           <div className="flex items-center mb-4">
@@ -45,7 +45,7 @@ const CategoryProducts = () => {
             </Button>
             <h1 className="text-xl font-bold ml-2 truncate">{decodedCategoryName}</h1>
           </div>
-          <p className="text-center text-gray-600 mt-8">Categoria não encontrada ou sem produtos.</p>
+          <p className="text-center text-muted-foreground mt-8">Categoria não encontrada ou sem produtos.</p>
         </main>
         <MobileNav />
         <Footer />
@@ -54,9 +54,9 @@ const CategoryProducts = () => {
   }
 
   return (
-    <div className="bg-gray-50 min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="p-4 space-y-4 pb-24 md:pb-6 flex-grow">
+      <main className="p-4 space-y-4 pb-32 md:pb-6 flex-grow">
         <div className="flex items-center mb-4">
           <Button asChild variant="ghost" size="icon" className="shrink-0 -ml-2">
             <Link to="/">
@@ -70,16 +70,16 @@ const CategoryProducts = () => {
 
         <Input placeholder={`Buscar produtos em ${decodedCategoryName}...`} />
 
-        <div className="flex items-center justify-center bg-gray-200 p-1 rounded-lg">
+        <div className="flex items-center justify-center bg-card border p-1 rounded-lg">
           <Button 
             onClick={() => setView('grid')} 
-            className={cn("w-full", view === 'grid' ? 'bg-white text-blue-700 shadow' : 'bg-transparent text-gray-600 shadow-none')}
+            className={cn("w-full", view === 'grid' ? 'bg-background text-primary shadow' : 'bg-transparent text-muted-foreground shadow-none')}
           >
             <LayoutGrid className="mr-2 h-4 w-4" /> Grid
           </Button>
           <Button 
             onClick={() => setView('list')} 
-            className={cn("w-full", view === 'list' ? 'bg-white text-blue-700 shadow' : 'bg-transparent text-gray-600 shadow-none')}
+            className={cn("w-full", view === 'list' ? 'bg-background text-primary shadow' : 'bg-transparent text-muted-foreground shadow-none')}
           >
             <List className="mr-2 h-4 w-4" /> Lista
           </Button>
@@ -87,8 +87,8 @@ const CategoryProducts = () => {
 
         <Accordion type="multiple" className="w-full space-y-2">
           {categoryData.subcategories.map((subcategory, index) => (
-            <AccordionItem key={subcategory.name} value={subcategory.name} id={`category-accordion-${index}`} className="bg-white border-none rounded-lg shadow-sm overflow-hidden">
-              <AccordionTrigger onClick={() => handleAccordionClick(`category-accordion-${index}`)} className="bg-blue-800 text-white hover:no-underline px-4 py-3 rounded-t-lg">
+            <AccordionItem key={subcategory.name} value={subcategory.name} id={`category-accordion-${index}`} className="bg-card border-none rounded-lg shadow-sm overflow-hidden">
+              <AccordionTrigger onClick={() => handleAccordionClick(`category-accordion-${index}`)} className="bg-primary text-primary-foreground hover:no-underline px-4 py-3 rounded-t-lg">
                 {subcategory.name}
               </AccordionTrigger>
               <AccordionContent className="p-4">
@@ -106,7 +106,7 @@ const CategoryProducts = () => {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-sm text-gray-500 text-center py-4">Nenhum produto nesta categoria.</p>
+                  <p className="text-sm text-muted-foreground text-center py-4">Nenhum produto nesta categoria.</p>
                 )}
               </AccordionContent>
             </AccordionItem>

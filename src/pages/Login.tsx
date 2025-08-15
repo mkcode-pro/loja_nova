@@ -15,13 +15,13 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-md space-y-6">
         <div className="text-center">
           <h1 className="text-3xl font-bold">Entrar</h1>
-          <p className="text-gray-500">Bem-vindo de volta!</p>
+          <p className="text-muted-foreground">Bem-vindo de volta!</p>
         </div>
-        <form onSubmit={handleLogin} className="bg-white p-8 rounded-lg shadow-md space-y-4">
+        <form onSubmit={handleLogin} className="bg-card p-8 rounded-lg shadow-md space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input id="email" type="email" placeholder="seu@email.com" required />
@@ -30,14 +30,14 @@ const LoginPage = () => {
             <Label htmlFor="password">Senha</Label>
             <Input id="password" type="password" required />
           </div>
-          <Button type="submit" className="w-full bg-blue-700 hover:bg-blue-800">
+          <Button type="submit" className="w-full">
             Entrar
           </Button>
         </form>
         <div className="text-center">
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-muted-foreground">
             Não tem uma conta?{" "}
-            <Link to="/cadastro" className="font-semibold text-blue-700 hover:underline">
+            <Link to="/cadastro" className="font-semibold text-primary hover:underline">
               Cadastre-se
             </Link>
           </p>

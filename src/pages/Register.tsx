@@ -13,13 +13,13 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-md space-y-6">
         <div className="text-center">
           <h1 className="text-3xl font-bold">Criar Conta</h1>
-          <p className="text-gray-500">É rápido e fácil!</p>
+          <p className="text-muted-foreground">É rápido e fácil!</p>
         </div>
-        <form onSubmit={handleRegister} className="bg-white p-8 rounded-lg shadow-md space-y-4">
+        <form onSubmit={handleRegister} className="bg-card p-8 rounded-lg shadow-md space-y-4">
           <div className="space-y-2">
             <Label htmlFor="name">Nome Completo</Label>
             <Input id="name" type="text" placeholder="Seu nome" required />
@@ -32,14 +32,14 @@ const RegisterPage = () => {
             <Label htmlFor="password">Senha</Label>
             <Input id="password" type="password" required />
           </div>
-          <Button type="submit" className="w-full bg-blue-700 hover:bg-blue-800">
+          <Button type="submit" className="w-full">
             Criar Conta
           </Button>
         </form>
         <div className="text-center">
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-muted-foreground">
             Já tem uma conta?{" "}
-            <Link to="/login" className="font-semibold text-blue-700 hover:underline">
+            <Link to="/login" className="font-semibold text-primary hover:underline">
               Faça Login
             </Link>
           </p>
